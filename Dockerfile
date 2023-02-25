@@ -1,13 +1,13 @@
-FROM ttbb/base:goc AS compiler
+FROM shoothzj/compile:go AS compiler
 
 RUN git clone --depth 1 https://github.com/apache/servicecomb-service-center && \
 cd servicecomb-service-center && \
 go build -o service-center github.com/apache/servicecomb-service-center/cmd/scserver
 
-FROM ttbb/base
+FROM shoothzj/base
 
-ENV SERVICECOMB_HOME /opt/sh/servicecomb
+ENV SERVICECOMB_HOME /opt/servicecomb
 
-COPY --from=compiler /opt/sh/servicecomb-service-center/service-center /opt/sh/servicecomb/service-center
+COPY --from=compiler /opt/servicecomb-service-center/service-center /opt/servicecomb/service-center
 
-WORKDIR /opt/sh/servicecomb
+WORKDIR /opt/servicecomb
